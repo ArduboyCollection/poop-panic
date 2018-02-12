@@ -1,35 +1,11 @@
-#include "Arduboy.h"
+#include "Arduboy2.h"
+#include "ArduboyTones.h"
 
-Arduboy arduboy;
+Arduboy2 arduboy;
+ArduboyTones sound(arduboy.audio.enabled);
 
 #define MAX_ANIMALS 30
 #define MAX_POOPS 30
-
-
-#define NOTE_C4  262
-#define NOTE_CS4 277
-#define NOTE_D4  294
-#define NOTE_DS4 311
-#define NOTE_E4  330
-#define NOTE_F4  349
-#define NOTE_FS4 370
-#define NOTE_G4  392
-#define NOTE_GS4 415
-#define NOTE_A4  440
-#define NOTE_AS4 466
-#define NOTE_B4  494
-#define NOTE_C5  523
-#define NOTE_CS5 554
-#define NOTE_D5  587
-#define NOTE_DS5 622
-#define NOTE_E5  659
-#define NOTE_F5  698
-#define NOTE_FS5 740
-#define NOTE_G5  784
-#define NOTE_GS5 831
-#define NOTE_A5  880
-#define NOTE_AS5 932
-#define NOTE_B5  988
 
 unsigned int tones[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4,NOTE_G4,NOTE_A4,NOTE_B4,NOTE_C5};
 
@@ -55,7 +31,7 @@ Char poops[MAX_POOPS];
 #define M_CLEAR 3
 #define M_ALLCLEAR 4
 
-#define WIDTH 128 - 8
+#define GAMEWIDTH 128 - 8
 
 byte mode = M_TITLE;
 byte level = 1;
@@ -169,8 +145,8 @@ void moveAnimals(){
         animals[i].x = 0;
         animals[i].vx *= -1;
       }
-      if(animals[i].x > WIDTH){
-        animals[i].x = WIDTH;
+      if(animals[i].x > GAMEWIDTH){
+        animals[i].x = GAMEWIDTH;
         animals[i].vx *= -1;
       }
 
@@ -219,7 +195,7 @@ void setupStage(){
       for(int i = 0; i < 2; i ++){
         byte animalId = getFreeAnimalId();
         animals[animalId].visible = true;
-        animals[animalId].x = random(0,WIDTH);
+        animals[animalId].x = random(0,GAMEWIDTH);
         animals[animalId].y = random(0,64);
         animals[animalId].vx = random(-2,2);
         animals[animalId].vy = random(-2,2);
@@ -232,7 +208,7 @@ void setupStage(){
       for(int i = 0; i < 3; i ++){
         byte animalId = getFreeAnimalId();
         animals[animalId].visible = true;
-        animals[animalId].x = random(0,WIDTH);
+        animals[animalId].x = random(0,GAMEWIDTH);
         animals[animalId].y = random(0,64);
         animals[animalId].vx = random(-2,2);
         animals[animalId].vy = random(-2,2);
@@ -245,7 +221,7 @@ void setupStage(){
       for(int i = 0; i < 1; i ++){
         byte animalId = getFreeAnimalId();
         animals[animalId].visible = true;
-        animals[animalId].x = random(0,WIDTH);
+        animals[animalId].x = random(0,GAMEWIDTH);
         animals[animalId].y = random(0,64);
         animals[animalId].vx = random(-2,2);
         animals[animalId].vy = random(-2,2);
@@ -255,7 +231,7 @@ void setupStage(){
       for(int i = 0; i < 1; i ++){
         byte animalId = getFreeAnimalId();
         animals[animalId].visible = true;
-        animals[animalId].x = random(0,WIDTH);
+        animals[animalId].x = random(0,GAMEWIDTH);
         animals[animalId].y = random(0,64);
         animals[animalId].vx = random(-2,2);
         animals[animalId].vy = random(-2,2);
@@ -268,7 +244,7 @@ void setupStage(){
       for(int i = 0; i < 3; i ++){
         byte animalId = getFreeAnimalId();
         animals[animalId].visible = true;
-        animals[animalId].x = random(0,WIDTH);
+        animals[animalId].x = random(0,GAMEWIDTH);
         animals[animalId].y = random(0,64);
         animals[animalId].vx = random(-2,2);
         animals[animalId].vy = random(-2,2);
@@ -278,7 +254,7 @@ void setupStage(){
        for(int i = 0; i < 1; i ++){
         byte animalId = getFreeAnimalId();
         animals[animalId].visible = true;
-        animals[animalId].x = random(0,WIDTH);
+        animals[animalId].x = random(0,GAMEWIDTH);
         animals[animalId].y = random(0,64);
         animals[animalId].vx = random(-2,2);
         animals[animalId].vy = random(-2,2);
@@ -432,8 +408,8 @@ void game(){
   }
   if(arduboy.pressed(RIGHT_BUTTON)){
     my.x ++;
-    if(my.x > WIDTH){
-      my.x = WIDTH;
+    if(my.x > GAMEWIDTH){
+      my.x = GAMEWIDTH;
     }
   }
   if(arduboy.pressed(UP_BUTTON)){
@@ -475,10 +451,10 @@ void game(){
   }
 
   if(counter % 40 == 0){
-    arduboy.tunes.tone(tones[0], 100);
+    sound.tone(tones[0], 100);
   }
   if(counter % 40 == 20){
-    arduboy.tunes.tone(tones[poopCount], 100);
+    sound.tone(tones[poopCount], 100);
   }
 
   arduboy.clear();
